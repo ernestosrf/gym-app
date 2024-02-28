@@ -1,15 +1,19 @@
+// import packages
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gym_app/register.dart';
 import 'firebase_options.dart';
-  
+
+// import pages  
 import 'login.dart';
+import 'register.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
     );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -23,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(), //alterar aqui
+      home: LoginPage(), //change to LoginPage after resolve the bug
     );
   }
 }

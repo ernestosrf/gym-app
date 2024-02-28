@@ -1,12 +1,35 @@
 import 'dart:html';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'register.dart';
+import 'home.dart';
 
 // ignore: use_key_in_widget_constructors
 class LoginPage extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  void _loginUser(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Erro ao fazer login.'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -68,7 +91,10 @@ class LoginPage extends StatelessWidget {
                     height: 50.0,
                     child: ElevatedButton(
                       onPressed: () {
-                        print('Usuário apertou "Resgistrar-se"');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => RegisterPage()),
+                        );
                       },
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
@@ -111,16 +137,16 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Positioned(
+                Positioned(
                   top: 320.0,
                   left: 16.0,
                   child: Center(
-                    child: Text(
-                      'E-mail',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.white,
+                    child: TextField(
+                      controller: emailController,
+                      decoration: const InputDecoration(
+                      labelText: 'E-mail',
+                      fillColor: Colors.white,
+                      filled: true,
                       ),
                     ),
                   ),
@@ -138,16 +164,16 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Positioned(
+                Positioned(
                   top: 420.0,
                   left: 16.0,
                   child: Center(
-                    child: Text(
-                      'Senha',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.white,
+                    child: TextField(
+                      controller: passwordController,
+                      decoration: const InputDecoration(
+                        labelText: 'Senha',
+                        fillColor: Colors.white,
+                        filled: true,
                       ),
                     ),
                   ),
@@ -190,9 +216,7 @@ class LoginPage extends StatelessWidget {
                   child: Container(
                     height: 50.0,
                     child: ElevatedButton(
-                      onPressed: () {
-                        print('Usuário apertou "Entrar"');
-                      },
+                      onPressed: () => _loginUser(context),
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.all(
                             Colors.black.withOpacity(0.7)),
