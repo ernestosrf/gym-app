@@ -155,6 +155,7 @@ class RegisterPage extends StatelessWidget {
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(width: 0, style: BorderStyle.none)
                       ),
                       hintText: "Insira seu nome",
                       hintStyle: TextStyle(
@@ -188,6 +189,7 @@ class RegisterPage extends StatelessWidget {
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(width: 0, style: BorderStyle.none)
                       ),
                       hintText: "email@exemplo.com",
                       hintStyle: TextStyle(
@@ -220,6 +222,7 @@ class RegisterPage extends StatelessWidget {
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(width: 0, style: BorderStyle.none)
                       ),
                       hintText: "Insira sua senha",
                       hintStyle: TextStyle(
@@ -252,6 +255,7 @@ class RegisterPage extends StatelessWidget {
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                        borderSide: BorderSide(width: 0, style: BorderStyle.none)
                       ),
                       hintText: "Confirme sua senha",
                       hintStyle: TextStyle(
