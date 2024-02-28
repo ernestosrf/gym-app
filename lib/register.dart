@@ -1,12 +1,55 @@
 import 'dart:html';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'login.dart';
 
 // ignore: use_key_in_widget_constructors
 class RegisterPage extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  void _registerUser(BuildContext context) async {
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Usuário cadastrado com sucesso!'),
+        ),
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('A senha é muito fraca.'),
+          ),
+        );
+      } else if (e.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('O e-mail já está em uso.'),
+          ),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Erro ao cadastrar usuário.'),
+        ),
+      );
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,11 +121,11 @@ class RegisterPage extends StatelessWidget {
             Expanded(
               child: Container(
                 // color: Colors.blueGrey.shade200,
-                child: const Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
+                    const Text(
                       "Registre-se agora",
                       style: TextStyle(
                         fontSize: 20,
@@ -91,8 +134,8 @@ class RegisterPage extends StatelessWidget {
                         color: Color(0xffFFFFFF),
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text(
+                    const SizedBox(height: 10),
+                    const Text(
                       "Seu nome",
                       style: TextStyle(
                         fontSize: 12,
@@ -101,8 +144,8 @@ class RegisterPage extends StatelessWidget {
                         color: Color(0xffFFFFFF),
                       ),
                     ),
-                    SizedBox(height: 5),
-                    TextField(
+                    const SizedBox(height: 5),
+                    const TextField(
                       style: TextStyle(
                         color: Color.fromARGB(255, 113, 168, 112),
                       ),
@@ -111,18 +154,17 @@ class RegisterPage extends StatelessWidget {
                         filled: true,
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text(
-                      "E-mail",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: "Roboto, sans-serif",
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xffFFFFFF),
+                    const SizedBox(height: 10),
+                    TextField(
+                        controller: emailController,
+                        decoration: const InputDecoration(
+                        labelText: 'E-mail',
+                        fillColor: Color(0xffFFFFFF),
+                        filled: true,
                       ),
                     ),
-                    SizedBox(height: 5),
-                    TextField(
+                    const SizedBox(height: 5),
+                    const TextField(
                       style: TextStyle(
                         color: Color.fromARGB(255, 113, 168, 112),
                       ),
@@ -131,18 +173,17 @@ class RegisterPage extends StatelessWidget {
                         filled: true,
                       ),
                     ),
-                    SizedBox(height: 10),
-                    Text(
-                      "Senha",
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontFamily: "Roboto, sans-serif",
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xffFFFFFF),
+                    const SizedBox(height: 10),
+                    TextField(
+                      controller: passwordController,
+                      decoration: const InputDecoration(
+                        labelText: 'Senha',
+                        fillColor: Color(0xffFFFFFF),
+                        filled: true,
                       ),
                     ),
-                    SizedBox(height: 5),
-                    TextField(
+                    const SizedBox(height: 5),
+                    const TextField(
                       style: TextStyle(
                         color: Color.fromARGB(255, 113, 168, 112),
                       ),
@@ -152,8 +193,8 @@ class RegisterPage extends StatelessWidget {
                       ),
                       obscureText: true,
                     ),
-                    SizedBox(height: 10),
-                    Text(
+                    const SizedBox(height: 10),
+                    const Text(
                       "Confirmar senha",
                       style: TextStyle(
                         fontSize: 12,
@@ -162,8 +203,8 @@ class RegisterPage extends StatelessWidget {
                         color: Color(0xffFFFFFF),
                       ),
                     ),
-                    SizedBox(height: 5),
-                    TextField(
+                    const SizedBox(height: 5),
+                    const TextField(
                       style: TextStyle(
                         color: Color.fromARGB(255, 113, 168, 112),
                       ),
@@ -173,10 +214,10 @@ class RegisterPage extends StatelessWidget {
                       ),
                       obscureText: true,
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     ElevatedButton(
-                      onPressed: null,
-                      child: Text(
+                      onPressed: () => _registerUser(context),
+                      child: const Text(
                         "Cadastrar",
                         style: TextStyle(
                           fontSize: 12,
