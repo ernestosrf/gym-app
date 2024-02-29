@@ -56,7 +56,6 @@ class _RegisterPage extends State<RegisterPage> {
         );
         return;
       }
-
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Usuário cadastrado com sucesso!'),
