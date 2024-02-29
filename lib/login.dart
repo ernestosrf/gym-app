@@ -1,8 +1,8 @@
-import 'dart:html';
-
+// import packages
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+// import pages  
 import 'register.dart';
 import 'home.dart';
 
@@ -14,8 +14,8 @@ class LoginPage extends StatelessWidget {
   void _loginUser(BuildContext context) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
+      email: emailController.text,
+      password: passwordController.text,
       );
       Navigator.push(
         context,
