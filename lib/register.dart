@@ -1,8 +1,8 @@
-import 'dart:html';
-
+// import packages
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+// import pages  
 import 'login.dart';
 
 // ignore: use_key_in_widget_constructors
@@ -12,9 +12,9 @@ class RegisterPage extends StatelessWidget {
 
   void _registerUser(BuildContext context) async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: emailController.text,
+      password: passwordController.text,
       );
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
