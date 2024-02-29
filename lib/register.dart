@@ -18,6 +18,7 @@ class RegisterPage extends StatefulWidget {
 class _RegisterPage extends State<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
   bool _showPassword = true;
   bool _showConfirmPassword = true;
 
@@ -33,12 +34,29 @@ class _RegisterPage extends State<RegisterPage> {
     });
   }
 
+  bool passwordMatch() {
+    if (passwordController.text.trim() == confirmPasswordController.text.trim()) {
+      return true;
+    }
+    return false;
+  }
+
   void _registerUser(BuildContext context) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: emailController.text,
-      password: passwordController.text,
-      );
+      if(passwordMatch()){
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('As senhas não coincidem.'),
+          ),
+        );
+        return;
+      }
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Usuário cadastrado com sucesso!'),
@@ -275,6 +293,7 @@ class _RegisterPage extends State<RegisterPage> {
                     style: const TextStyle(
                       color: Color.fromARGB(255, 113, 168, 112),
                     ),
+                    controller: confirmPasswordController,
                     obscureText: _showConfirmPassword,
                     decoration: InputDecoration(
                       fillColor: Colors.white,
