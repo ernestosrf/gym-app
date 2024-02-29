@@ -2,11 +2,13 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-// import pages
+
+// import pages  
 import 'register.dart';
 import 'home.dart';
 
 // ignore: use_key_in_widget_constructors
+
 class LoginPage extends StatefulWidget {
   @override
   // ignore: library_private_types_in_public_api
@@ -39,6 +41,14 @@ class _LoginPageState extends State<LoginPage> {
       );
     } catch (e) {
       // ignore: use_build_context_synchronously
+      email: emailController.text,
+      password: passwordController.text,
+      );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Erro ao fazer login.'),

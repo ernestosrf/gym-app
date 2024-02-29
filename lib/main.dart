@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LoginPage(), //change to LoginPage after resolve the bug - OK!
+      home: LoginPage(),
     );
   }
 }
