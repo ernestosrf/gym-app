@@ -7,6 +7,7 @@ import 'firebase_options.dart';
 // import pages  
 import 'login.dart';
 import 'register.dart';
+import 'home.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: RegisterPage(), //change to LoginPage after resolve the bug
+      home: const HomePage(), //change to LoginPage after resolve the bug
     );
   }
 }
