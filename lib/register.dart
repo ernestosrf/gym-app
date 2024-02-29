@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 
-// import pages  
+// import pages
 import 'login.dart';
 
 // ignore: use_key_in_widget_constructors
@@ -121,28 +121,25 @@ class _RegisterPage extends State<RegisterPage> {
                       color: Color(0xffFFFFFF),
                     ),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        "ao",
-                        style: TextStyle(
+                  Row(children: [
+                    Text(
+                      "ao",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontFamily: "Roboto, sans-serif",
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xffFFFFFF),
+                      ),
+                    ),
+                    Text(
+                      " Gym App!",
+                      style: TextStyle(
                           fontSize: 28,
                           fontFamily: "Roboto, sans-serif",
                           fontWeight: FontWeight.bold,
-                          color: Color(0xffFFFFFF),
-                        ),
-                      ),
-                      Text(
-                        " Gym App!",
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontFamily: "Roboto, sans-serif",
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 57, 211, 54)
-                        ),
-                      ),
-                    ]
-                  ),
+                          color: Color.fromARGB(255, 57, 211, 54)),
+                    ),
+                  ]),
                   Text(
                     "Seu parceiro de academia",
                     style: TextStyle(
@@ -192,9 +189,9 @@ class _RegisterPage extends State<RegisterPage> {
                         maxHeight: 50.0,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        borderSide: BorderSide(width: 0, style: BorderStyle.none)
-                      ),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          borderSide:
+                              BorderSide(width: 0, style: BorderStyle.none)),
                       hintText: "Insira seu nome",
                       hintStyle: TextStyle(
                         color: Color.fromARGB(255, 113, 168, 112),
@@ -226,9 +223,9 @@ class _RegisterPage extends State<RegisterPage> {
                         maxHeight: 50.0,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        borderSide: BorderSide(width: 0, style: BorderStyle.none)
-                      ),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          borderSide:
+                              BorderSide(width: 0, style: BorderStyle.none)),
                       hintText: "email@exemplo.com",
                       hintStyle: TextStyle(
                         color: Color.fromARGB(255, 113, 168, 112),
@@ -259,7 +256,7 @@ class _RegisterPage extends State<RegisterPage> {
                         maxWidth: double.infinity,
                         maxHeight: 50.0,
                       ),
-                      border:const OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         borderSide: BorderSide(width: 0, style: BorderStyle.none)
                       ),
@@ -325,20 +322,20 @@ class _RegisterPage extends State<RegisterPage> {
                   ElevatedButton(
                     onPressed: () => _registerUser(context),
                     style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                        Color.fromARGB(255, 0, 0, 0),
-                      ),
-                      shape: MaterialStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          side: BorderSide(
-                            color: Colors.white,
-                            width: 2,
+                        backgroundColor: MaterialStatePropertyAll(
+                          Color.fromARGB(255, 0, 0, 0),
+                        ),
+                        shape: MaterialStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            side: BorderSide(
+                              color: Colors.white,
+                              width: 2,
+                            ),
                           ),
                         ),
-                      ),
-                      minimumSize: MaterialStatePropertyAll(Size(double.infinity, 55.0))
-                    ),
+                        minimumSize: MaterialStatePropertyAll(
+                            Size(double.infinity, 55.0))),
                     child: const Text(
                       "Cadastrar",
                       style: TextStyle(
@@ -362,11 +359,12 @@ class _RegisterPage extends State<RegisterPage> {
                           color: Color(0xffFFFFFF),
                         ),
                       ),
-                      GestureDetector(
+                      InkWell(
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => LoginPage()),
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
                           );
                         },
                         child: const Text(
