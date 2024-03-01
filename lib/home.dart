@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gym_app/assets/header/header.dart';
@@ -31,9 +32,9 @@ class _HomePage extends State<HomePage> {
           left: 35,
           right: 35,
         ),     
-        child: const Column(
+        child: Column(
           children: <Widget>[
-            Row(
+            const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
@@ -50,6 +51,12 @@ class _HomePage extends State<HomePage> {
                   color: Colors.black,
                 )
               ],
+            ),
+            ElevatedButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              child: const Text('Logout'),
             )
           ],
         ),
