@@ -1,4 +1,6 @@
 // import packages
+// ignore_for_file: avoid_print, use_build_context_synchronously, duplicate_ignore
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -40,7 +42,8 @@ class _LoginPageState extends State<LoginPage> {
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
       );
-    } on FirebaseAuthException catch (e) { // TO-DO: show error message to user
+    } on FirebaseAuthException catch (e) {
+      // TO-DO: show error message to user
       print(e.code);
       if (e.code == 'invalid-email') {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -153,7 +156,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => RegisterPage()),
+                                      builder: (context) => const RegisterPage()),
                                 );
                               },
                               style: ButtonStyle(
@@ -246,7 +249,8 @@ class _LoginPageState extends State<LoginPage> {
                                       _obscureText
                                           ? Icons.visibility_off
                                           : Icons.visibility,
-                                      color: const Color.fromARGB(255, 57, 211, 54),
+                                      color: const Color.fromARGB(
+                                          255, 57, 211, 54),
                                     ),
                                     onPressed: _togglePasswordVisibility,
                                   ),
@@ -254,8 +258,8 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               InkWell(
                                 onTap: () {
-                              //    print(
-                              //        'Usuário apertou "Esqueci minha senha"');
+                                  //    print(
+                                  //        'Usuário apertou "Esqueci minha senha"');
                                 },
                                 child: const Text(
                                   'Esqueci minha senha',

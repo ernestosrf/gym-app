@@ -1,3 +1,5 @@
+// ignore_for_file: unused_import, duplicate_import, unnecessary_import, avoid_function_literals_in_foreach_calls, avoid_print
+
 import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,10 +31,10 @@ class _HomePage extends State<HomePage> {
   // get document IDs
   Future getDocIds() async {
     await FirebaseFirestore.instance.collection('users').get().then(
-      (snapshot) => snapshot.docs.forEach((element) {
-        print(element.reference);
-      }),
-    );
+          (snapshot) => snapshot.docs.forEach((element) {
+            print(element.reference);
+          }),
+        );
   }
 
   @override
@@ -72,7 +74,8 @@ class _HomePage extends State<HomePage> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const TrainingPage()),
+                      MaterialPageRoute(
+                          builder: (context) => const TrainingPage()),
                     );
                   },
                   child: const Icon(
