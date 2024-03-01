@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gym_app/assets/header/header.dart';
+import 'package:gym_app/training.dart';
 import 'firebase_options.dart';
 
 import 'assets/header/header.dart';
@@ -34,10 +35,10 @@ class _HomePage extends State<HomePage> {
         ),     
         child: Column(
           children: <Widget>[
-            const Row(
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   "Meus treinos",
                   style: TextStyle(
                     fontSize: 16,
@@ -45,19 +46,21 @@ class _HomePage extends State<HomePage> {
                     color: Colors.black,
                   ),
                 ),
-                Icon(
-                  Icons.add_box_outlined,
-                  size: 30,
-                  color: Colors.black,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const TrainingPage()),
+                    );
+                  },
+                  child: const Icon(
+                    Icons.add_box_outlined,
+                    size: 30,
+                    color: Colors.black,
+                  ),
                 )
               ],
             ),
-            ElevatedButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              child: const Text('Logout'),
-            )
           ],
         ),
       )
