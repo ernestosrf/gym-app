@@ -19,13 +19,64 @@ class TrainingPage extends StatefulWidget {
 class _TrainingPage extends State<TrainingPage> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Text(
-        "Meus treinos",
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: Colors.black,
+    return Scaffold(
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            const Row(
+              children: [
+                Text(
+                  "Meus treinos",
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  ">",
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  "Supino",
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10), // Espaço entre a Row e o TextField
+            TextField(
+              controller: TextEditingController(text: 'Supino'),
+              decoration: InputDecoration(
+                fillColor: Colors.white,
+                filled: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: const BorderSide(
+                    color: Colors.grey,
+                    width: 2.0,
+                  ),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide: const BorderSide(
+                    color: Colors.grey,
+                    width: 2.0,
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
