@@ -20,6 +20,10 @@ class _TrainingPage extends State<TrainingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(80),
+        child: Header(),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
