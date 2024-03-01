@@ -1,4 +1,5 @@
 // import packages
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
@@ -6,12 +7,10 @@ import 'package:flutter/widgets.dart';
 // import pages
 import 'login.dart';
 
-// ignore: use_key_in_widget_constructors
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
   _RegisterPage createState() => _RegisterPage();
 }
 
@@ -19,8 +18,18 @@ class _RegisterPage extends State<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   bool _showPassword = true;
   bool _showConfirmPassword = true;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
+    nameController.dispose();
+    super.dispose();
+  }
 
   void _togglePasswordVisibility() {
     setState(() {
@@ -44,10 +53,15 @@ class _RegisterPage extends State<RegisterPage> {
   void _registerUser(BuildContext context) async {
     try {
       if(passwordMatch()){
+        // create user
         await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
         );
+        
+        // add user data
+        addUserData(nameController.text.trim(), emailController.text.trim());
+
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -86,6 +100,13 @@ class _RegisterPage extends State<RegisterPage> {
         ),
       );
     }
+  }
+
+  Future addUserData(String name, String email) async {
+    await FirebaseFirestore.instance.collection('users').add({
+      'name': name,
+      'email': email,
+    });
   }
 
   @override
@@ -176,11 +197,12 @@ class _RegisterPage extends State<RegisterPage> {
                     ),
                   ),
                   const SizedBox(height: 5),
-                  const TextField(
-                    style: TextStyle(
+                  TextField(
+                    style: const TextStyle(
                       color: Color.fromARGB(255, 113, 168, 112),
                     ),
-                    decoration: InputDecoration(
+                    controller: nameController,
+                    decoration: const InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
                       constraints: BoxConstraints(
