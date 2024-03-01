@@ -10,15 +10,15 @@ import 'firebase_options.dart';
 import 'assets/header/header.dart';
 
 // ignore: use_key_in_widget_constructors
-class TrainingPage extends StatefulWidget {
-  const TrainingPage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
   @override
   // ignore: library_private_types_in_public_api
-  _TrainingPage createState() => _TrainingPage();
+  _HomePage createState() => _HomePage();
 }
 
-class _TrainingPage extends State<TrainingPage> {
+class _HomePage extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,24 +40,6 @@ class _TrainingPage extends State<TrainingPage> {
               children: [
                 const Text(
                   "Meus treinos",
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                SizedBox(width: 10),
-                Text(
-                  ">",
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                SizedBox(width: 10),
-                Text(
-                  "Supino",
                   style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
