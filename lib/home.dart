@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gym_app/assets/bottomNavigator/bottomNavigator.dart';
 import 'package:gym_app/assets/header/header.dart';
 import 'package:gym_app/training.dart';
 import 'firebase_options.dart';
@@ -32,7 +33,7 @@ class _HomePage extends State<HomePage> {
           bottom: 35,
           left: 35,
           right: 35,
-        ),     
+        ),
         child: Column(
           children: <Widget>[
             Row(
@@ -64,6 +65,7 @@ class _HomePage extends State<HomePage> {
           ],
         ),
       ),
+      bottomNavigationBar: const BottomNavigator(),
     );
   }
 }

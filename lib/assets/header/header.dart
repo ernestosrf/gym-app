@@ -12,57 +12,55 @@ class Header extends StatefulWidget {
 class _Header extends State<Header> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 80,
-        automaticallyImplyLeading: false,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1),
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Colors.black,
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.black,
-                  width: 2,
-                ),
+    return AppBar(
+      toolbarHeight: 80,
+      automaticallyImplyLeading: false,
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(1),
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Colors.black,
+            border: Border(
+              bottom: BorderSide(
+                color: Colors.black,
+                width: 2,
               ),
-            ),  
+            ),
+          ),  
+        ),
+      ),
+      title: const Column(
+        children: [
+          Text(
+            'Gym App',
+            style: TextStyle(
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+              color: Color.fromARGB(255, 57, 211, 54)
+            )
           ),
-        ),
-        title: const Column(
-          children: [
-            Text(
-              'Gym App',
-              style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: Color.fromARGB(255, 57, 211, 54)
-              )
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Bem-Vindo,',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black
-                  )
-                ),
-                Text(
-                  ' Fulano!',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromARGB(255, 57, 211, 54)
-                  )
-                ),
-              ],
-            ),
-          ],
-        ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                'Bem-Vindo,',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black
+                )
+              ),
+              Text(
+                ' Fulano!',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromARGB(255, 57, 211, 54)
+                )
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
