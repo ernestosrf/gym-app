@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gym_app/assets/bottomNavigator/bottomNavigator.dart';
@@ -20,6 +21,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
+  final user = FirebaseAuth.instance.currentUser!;
+
+  // document IDs
+  List<String> documentIds = [];
+
+  // get document IDs
+  Future getDocIds() async {
+    await FirebaseFirestore.instance.collection('users').get().then(
+      (snapshot) => snapshot.docs.forEach((element) {
+        print(element.reference);
+      }),
+    );
+  }
+
+  @override
+  void initState() {
+    getDocIds();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
