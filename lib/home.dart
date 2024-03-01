@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gym_app/assets/header/header.dart';
@@ -44,6 +46,7 @@ class _HomePage extends State<HomePage> {
                 ),
                 Icon(
                   Icons.add_box_outlined,
+                  size: 30,
                   color: Colors.black,
                 )
               ],
