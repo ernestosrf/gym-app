@@ -27,9 +27,8 @@ class _TrainingPage extends State<TrainingPage> {
         child: Header(),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
+          padding: const EdgeInsets.all(8.0),
+          child: Column(children: [
             const Row(
               children: [
                 Text(
@@ -229,9 +228,163 @@ class _TrainingPage extends State<TrainingPage> {
                 ),
               ),
             ),
-          ],
-        ),
-      ),
+            const SizedBox(height: 20),
+            Container(
+              //submit button
+              width: 80,
+              height: 47,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: const Color.fromRGBO(187, 198, 207, 1),
+              ),
+
+              child: TextButton(
+                onPressed: () {
+                  // ignore: avoid_print
+                  print('Submit');
+                },
+                child: const Text(
+                  'Salvar',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 0, 0, 0),
+                  ),
+                ),
+              ),
+            ),
+            // divisor
+            const SizedBox(height: 20),
+            const Divider(
+              color: Colors.grey,
+              height: 20,
+              thickness: 2,
+              indent: 0,
+              endIndent: 0,
+            ),
+            // Input de séries
+            const SizedBox(height: 20),
+            Column(
+              children: [
+                const Text(
+                  'Insira novos dados',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 6,
+                      child: TextField(
+                        controller: TextEditingController(text: 'Séries'),
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                        decoration: InputDecoration(
+                          fillColor: Colors.white,
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
+                              width: 2.0,
+                            ),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
+                              width: 2.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    const SizedBox(height: 20),
+                    Container(
+                      width: 70,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        color: const Color.fromRGBO(187, 198, 207, 1),
+                      ),
+                      child: TextButton(
+                        onPressed: () {
+                          // ignore: avoid_print
+                          print('Adc');
+                        },
+                        child: const Text(
+                          'Adc',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 0, 0, 0),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  "Seus últimos registros",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
+              ],
+            ),
+            const SizedBox(height: 20),
+            // Tabela de registros
+            Container(
+                child: const Column(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Dia",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    ),
+                  ),
+                  Text(
+                    "Qtd. de Séries",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    ),
+                  ),
+                  Text(
+                    "Carga",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    ),
+                  )
+                ],
+              ),
+              //para cada novo dado, um novo Row (Se houver metódo mais eficiente, favor alterar)
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Text("29/03"), Text("20"), Text("25 kg")],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [Text("29/03"), Text("20"), Text("25 kg")],
+              )
+            ])),
+          ])),
     );
   }
 }
