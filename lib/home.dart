@@ -1,8 +1,10 @@
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gym_app/assets/header/header.dart';
+import 'package:gym_app/training.dart';
 import 'firebase_options.dart';
 
 import 'assets/header/header.dart';
@@ -20,13 +22,23 @@ class _TrainingPage extends State<TrainingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(80),
+        child: Header(),
+      ),
+      body: Container(
+        padding: const EdgeInsets.only(
+          top: 35,
+          bottom: 35,
+          left: 35,
+          right: 35,
+        ),     
         child: Column(
-          children: [
-            const Row(
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
+                const Text(
                   "Meus treinos",
                   style: TextStyle(
                     fontSize: 12,
@@ -52,51 +64,20 @@ class _TrainingPage extends State<TrainingPage> {
                     color: Colors.black,
                   ),
                 ),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const TrainingPage()),
+                    );
+                  },
+                  child: const Icon(
+                    Icons.add_box_outlined,
+                    size: 30,
+                    color: Colors.black,
+                  ),
+                )
               ],
-            ),
-            const SizedBox(height: 10), // Espaço entre a Row e o TextField
-            TextField(
-              controller: TextEditingController(text: 'Supino'),
-              decoration: InputDecoration(
-                fillColor: Colors.white,
-                filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: const BorderSide(
-                    color: Colors.grey,
-                    width: 2.0,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: const BorderSide(
-                    color: Colors.grey,
-                    width: 2.0,
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 30), // Espaço entre os TextFields
-            TextField(
-              controller: TextEditingController(text: 'Supino'),
-              decoration: InputDecoration(
-                fillColor: Colors.white,
-                filled: true,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: const BorderSide(
-                    color: Colors.grey,
-                    width: 2.0,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: const BorderSide(
-                    color: Colors.grey,
-                    width: 2.0,
-                  ),
-                ),
-              ),
             ),
           ],
         ),

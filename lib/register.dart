@@ -1,21 +1,61 @@
 // import packages
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/widgets.dart';
 
-// import pages  
+// import pages
 import 'login.dart';
 
 // ignore: use_key_in_widget_constructors
-class RegisterPage extends StatelessWidget {
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
+
+  @override
+  // ignore: library_private_types_in_public_api
+  _RegisterPage createState() => _RegisterPage();
+}
+
+class _RegisterPage extends State<RegisterPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+  bool _showPassword = true;
+  bool _showConfirmPassword = true;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _showPassword = !_showPassword;
+    });
+  }
+
+  void _toggleConfirmPasswordVisibility() {
+    setState(() {
+      _showConfirmPassword = !_showConfirmPassword;
+    });
+  }
+
+  bool passwordMatch() {
+    if (passwordController.text.trim() == confirmPasswordController.text.trim()) {
+      return true;
+    }
+    return false;
+  }
 
   void _registerUser(BuildContext context) async {
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: emailController.text,
-      password: passwordController.text,
-      );
+      if(passwordMatch()){
+        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text,
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('As senhas não coincidem.'),
+          ),
+        );
+        return;
+      }
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('Usuário cadastrado com sucesso!'),
@@ -80,28 +120,25 @@ class RegisterPage extends StatelessWidget {
                       color: Color(0xffFFFFFF),
                     ),
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        "ao",
-                        style: TextStyle(
+                  Row(children: [
+                    Text(
+                      "ao",
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontFamily: "Roboto, sans-serif",
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xffFFFFFF),
+                      ),
+                    ),
+                    Text(
+                      " Gym App!",
+                      style: TextStyle(
                           fontSize: 28,
                           fontFamily: "Roboto, sans-serif",
                           fontWeight: FontWeight.bold,
-                          color: Color(0xffFFFFFF),
-                        ),
-                      ),
-                      Text(
-                        " Gym App!",
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontFamily: "Roboto, sans-serif",
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 57, 211, 54)
-                        ),
-                      ),
-                    ]
-                  ),
+                          color: Color.fromARGB(255, 57, 211, 54)),
+                    ),
+                  ]),
                   Text(
                     "Seu parceiro de academia",
                     style: TextStyle(
@@ -151,9 +188,9 @@ class RegisterPage extends StatelessWidget {
                         maxHeight: 50.0,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        borderSide: BorderSide(width: 0, style: BorderStyle.none)
-                      ),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          borderSide:
+                              BorderSide(width: 0, style: BorderStyle.none)),
                       hintText: "Insira seu nome",
                       hintStyle: TextStyle(
                         color: Color.fromARGB(255, 113, 168, 112),
@@ -185,9 +222,9 @@ class RegisterPage extends StatelessWidget {
                         maxHeight: 50.0,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        borderSide: BorderSide(width: 0, style: BorderStyle.none)
-                      ),
+                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                          borderSide:
+                              BorderSide(width: 0, style: BorderStyle.none)),
                       hintText: "email@exemplo.com",
                       hintStyle: TextStyle(
                         color: Color.fromARGB(255, 113, 168, 112),
@@ -210,23 +247,32 @@ class RegisterPage extends StatelessWidget {
                       color: Color.fromARGB(255, 113, 168, 112),
                     ),
                     controller: passwordController,
-                    decoration: const InputDecoration(
+                    obscureText: _showPassword,
+                    decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
-                      constraints: BoxConstraints(
+                      constraints: const BoxConstraints(
                         maxWidth: double.infinity,
                         maxHeight: 50.0,
                       ),
-                      border: OutlineInputBorder(
+                      border:const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         borderSide: BorderSide(width: 0, style: BorderStyle.none)
                       ),
                       hintText: "Insira sua senha",
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         color: Color.fromARGB(255, 113, 168, 112),
                       ),
+                      suffixIcon: IconButton(
+                        onPressed: _togglePasswordVisibility,
+                        icon: Icon(
+                          _showPassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                          color: const Color.fromARGB(255, 113, 168, 112),
+                        ),
+                      )
                     ),
-                    obscureText: true,
                   ),
                   const SizedBox(height: 10),
                   const Text(
@@ -239,46 +285,56 @@ class RegisterPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 5),
-                  const TextField(
-                    style: TextStyle(
+                  TextField(
+                    style: const TextStyle(
                       color: Color.fromARGB(255, 113, 168, 112),
                     ),
+                    controller: confirmPasswordController,
+                    obscureText: _showConfirmPassword,
                     decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
-                      constraints: BoxConstraints(
+                      constraints: const BoxConstraints(
                         maxWidth: double.infinity,
                         maxHeight: 50.0,
                       ),
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(10.0)),
                         borderSide: BorderSide(width: 0, style: BorderStyle.none)
                       ),
                       hintText: "Confirme sua senha",
-                      hintStyle: TextStyle(
+                      hintStyle: const TextStyle(
                         color: Color.fromARGB(255, 113, 168, 112),
                       ),
+                      suffixIcon: IconButton(
+                        onPressed: _toggleConfirmPasswordVisibility,
+                        icon: Icon(
+                          _showConfirmPassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
+                          color: const Color.fromARGB(255, 113, 168, 112),
+                        ),
+                      )
                     ),
-                    obscureText: true,
                   ),
                   const SizedBox(height: 15),
                   ElevatedButton(
                     onPressed: () => _registerUser(context),
                     style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(
-                        Color.fromARGB(255, 0, 0, 0),
-                      ),
-                      shape: MaterialStatePropertyAll(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          side: BorderSide(
-                            color: Colors.white,
-                            width: 2,
+                        backgroundColor: MaterialStatePropertyAll(
+                          Color.fromARGB(255, 0, 0, 0),
+                        ),
+                        shape: MaterialStatePropertyAll(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            side: BorderSide(
+                              color: Colors.white,
+                              width: 2,
+                            ),
                           ),
                         ),
-                      ),
-                      minimumSize: MaterialStatePropertyAll(Size(double.infinity, 55.0))
-                    ),
+                        minimumSize: MaterialStatePropertyAll(
+                            Size(double.infinity, 55.0))),
                     child: const Text(
                       "Cadastrar",
                       style: TextStyle(
@@ -302,11 +358,12 @@ class RegisterPage extends StatelessWidget {
                           color: Color(0xffFFFFFF),
                         ),
                       ),
-                      GestureDetector(
+                      InkWell(
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => LoginPage()),
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()),
                           );
                         },
                         child: const Text(

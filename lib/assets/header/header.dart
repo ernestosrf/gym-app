@@ -15,6 +15,7 @@ class _Header extends State<Header> {
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80,
+        automaticallyImplyLeading: false,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
           child: Container(
