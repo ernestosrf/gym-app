@@ -30,6 +30,7 @@ class _BottomNavigator extends State<BottomNavigator> {
         ),
       ],
       selectedItemColor: const Color.fromARGB(255, 57, 211, 54),
+      unselectedItemColor: const Color.fromARGB(255, 57, 211, 54),
       onTap: (index) {
         if (index == 0) {
           Navigator.push(
