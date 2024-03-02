@@ -71,7 +71,7 @@ class _HomePage extends State<HomePage> {
                 const Text(
                   "Meus treinos",
                   style: TextStyle(
-                    fontSize: 12,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
