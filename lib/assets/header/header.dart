@@ -1,5 +1,4 @@
 // ignore_for_file: avoid_print
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,7 +13,7 @@ class Header extends StatefulWidget {
 }
 
 class _Header extends State<Header> {
-  String userName = ' username!';
+  String userName = ' Username!';
 
   @override
   void initState() {
@@ -25,23 +24,16 @@ class _Header extends State<Header> {
   fetchUserName() async {
   User? user = FirebaseAuth.instance.currentUser;
   if (user != null) {
-    print('User uid: ${user.uid}'); // Add this line
     try {
       QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').where('email', isEqualTo: user.email).get();
       if (querySnapshot.docs.isNotEmpty) {
         Map<String, dynamic>? data = querySnapshot.docs.first.data() as Map<String, dynamic>?;
-        if (data != null && data.containsKey('name')) {
-          setState(() {
-            userName = data['name'];
-          });
-        } else {
-          print('No name field found in document');
-        }
-      } else {
-        print('No document found for user');
+        setState(() {
+          userName = data != null && data.containsKey('name') ? data['name'] + "!" : 'Username!';
+        });
       }
     } catch (e) {
-      print('Error getting user name: $e');
+      print('Error getting username: $e');
     }
   }
 }
