@@ -2,6 +2,7 @@
 
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gym_app/assets/header/header.dart';
@@ -17,7 +18,7 @@ class TrainingPage extends StatefulWidget {
   final int? reps;
   final String? muscleGroup;
 
-  const TrainingPage({
+  const TrainingPage({super.key, 
     this.exerciseId,
     this.exerciseName,
     this.weight,
@@ -26,10 +27,10 @@ class TrainingPage extends StatefulWidget {
     });
 
   @override
-  _TrainingPageState createState() => _TrainingPageState();
+  TrainingPageState createState() => TrainingPageState();
 }
 
-class _TrainingPageState extends State<TrainingPage> {
+class TrainingPageState extends State<TrainingPage> {
   String dropdownValue = 'Grupo muscular';
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final FirestoreService _firestoreService = FirestoreService();
@@ -64,7 +65,9 @@ if (_formKey.currentState!.validate()) {
       _firestoreService.updateExercise(userId, widget.exerciseId!, exerciseData);
       Navigator.pop(context);
     } else {
-      print('User ID not available');
+      if (kDebugMode) {
+        print('User ID not available');
+      }
     }
   } else {
     // create a new exercise
@@ -73,7 +76,9 @@ if (_formKey.currentState!.validate()) {
       _firestoreService.addExercise(userId, exerciseData);
       Navigator.pop(context);
     } else {
-      print('User ID not available');
+      if (kDebugMode) {
+        print('User ID not available');
+      }
     }
   }
 }

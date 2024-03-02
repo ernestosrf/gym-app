@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 class FirestoreService {
   final FirebaseFirestore _db = FirebaseFirestore.instance;
@@ -8,7 +9,9 @@ class FirestoreService {
     try {
       await _db.collection('users').doc(userId).collection('exercise').add(exerciseData);
     } catch (e) {
-      print('Error adding exercise: $e');
+      if (kDebugMode) {
+        print('Error adding exercise: $e');
+      }
     }
   }
 
@@ -16,7 +19,9 @@ class FirestoreService {
     try {
       await _db.collection('users').doc(userId).collection('exercise').doc(exerciseId).update(exerciseData);
     } catch (e) {
-      print('Error updating exercise: $e');
+      if (kDebugMode) {
+        print('Error updating exercise: $e');
+      }
     }
   }
 
@@ -28,7 +33,9 @@ class FirestoreService {
     try {
       await _db.collection('users').doc(userId).collection('exercise').doc(exerciseId).delete();
     } catch (e) {
-      print('Error deleting exercise: $e');
+      if (kDebugMode) {
+        print('Error deleting exercise: $e');
+      }
     }
   }
 
@@ -40,15 +47,21 @@ class FirestoreService {
       if (querySnapshot.docs.isNotEmpty) {
         return querySnapshot.docs.first.id;
       } else {
-        print('No document found for user');
+        if (kDebugMode) {
+          print('No document found for user');
+        }
         return null;
       }
     } catch (e) {
-      print('Error getting user ID from Firestore: $e');
+      if (kDebugMode) {
+        print('Error getting user ID from Firestore: $e');
+      }
       return null;
     }
   } else {
-    print('User is not logged in');
+    if (kDebugMode) {
+      print('User is not logged in');
+    }
     return null;
   }
 }
