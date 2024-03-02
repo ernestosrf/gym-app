@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gym_app/assets/bottomNavigator/bottomNavigator.dart';
 import 'package:gym_app/assets/header/header.dart';
+import 'package:gym_app/firestore_service.dart';
 import 'package:gym_app/training.dart';
 import 'firebase_options.dart';
 
@@ -24,24 +25,29 @@ class HomePage extends StatefulWidget {
 
 class _HomePage extends State<HomePage> {
   final user = FirebaseAuth.instance.currentUser!;
-
-  // document IDs
-  List<String> documentIds = [];
-
-  // get document IDs
-  Future getDocIds() async {
-    await FirebaseFirestore.instance.collection('users').get().then(
-          (snapshot) => snapshot.docs.forEach((element) {
-            print(element.reference);
-          }),
-        );
-  }
+  final FirestoreService _firestoreService = FirestoreService();
+  String? userId;
 
   @override
   void initState() {
-    getDocIds();
     super.initState();
+    getUserId();
   }
+
+  Future<void> getUserId() async {
+    userId = await _firestoreService.getUserIdFromFirestore();
+    setState(() {
+      userId = userId;
+    });
+  }
+
+ Future<void> deleteExercise(String exerciseId) async {
+    try {
+      await _firestoreService.deleteExercise(userId!, exerciseId);
+    } catch (e) {
+      print('Error deleting exercise: $e');
+    }
+  }  
 
   @override
   Widget build(BuildContext context) {
@@ -85,6 +91,53 @@ class _HomePage extends State<HomePage> {
                   ),
                 )
               ],
+            ),
+            Expanded(child: StreamBuilder(
+              stream: userId != null ? _firestoreService.getExercises(userId!) : null,
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      var exercise = snapshot.data!.docs[index];
+                      return ListTile(
+                        title: Text(exercise['name']),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TrainingPage(
+                                      exerciseId: snapshot.data!.docs[index].id,
+                                      exerciseName: exercise['name'],
+                                      weight: exercise['weight'],
+                                      reps: exercise['reps'],
+                                      muscleGroup: exercise['muscleGroup'],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () {
+                                deleteExercise(snapshot.data!.docs[index].id);
+                              },
+                            ),
+                          ],
+                        )
+                      );
+                    },
+                  );
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            ),
             ),
           ],
         ),
