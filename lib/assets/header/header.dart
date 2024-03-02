@@ -102,22 +102,29 @@ class _Header extends State<Header> {
   alignment: Alignment.centerRight,
   child: Container(
     decoration: BoxDecoration(
-      shape: BoxShape.circle,
+      borderRadius: const BorderRadius.all(Radius.circular(8)),
       border: Border.all(
         color: Colors.black,
         width: 2,
       ),
     ),
-    child: IconButton(
-      icon: const Icon(Icons.logout),
-      onPressed: () async {
-        await FirebaseAuth.instance.signOut();
-        print("Usuário desconectado!");
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginPage()),
-        );
-      },
+    child: Material(
+      clipBehavior: Clip.antiAlias,
+      borderRadius: const BorderRadius.all(Radius.circular(8)),
+      child: InkWell(
+        onTap: () async {
+          await FirebaseAuth.instance.signOut();
+          print("Usuário desconectado!");
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginPage()),
+          );
+        },
+        child: const Padding(
+          padding: EdgeInsets.all(8.0),
+          child: Icon(Icons.logout),
+        ),
+      ),
     ),
   ),
 ),

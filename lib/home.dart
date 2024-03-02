@@ -131,7 +131,7 @@ class _HomePage extends State<HomePage> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   IconButton(
-                                    icon: const Icon(Icons.edit_note_outlined),
+                                    icon: const Icon(Icons.edit),
                                     onPressed: () {
                                       Navigator.push(
                                         context,
@@ -150,7 +150,8 @@ class _HomePage extends State<HomePage> {
                                     },
                                   ),
                                   IconButton(
-                                    icon: const Icon(Icons.delete_outlined),
+                                    icon: Image.asset(
+                                        './assets/icons/delete_icon.png'),
                                     onPressed: () {
                                       deleteExercise(
                                           snapshot.data!.docs[index].id);
