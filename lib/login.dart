@@ -22,7 +22,7 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool _obscureText = true;
-  String passwordHintText = '';
+  String passwordHintText = '**********';
 
   void _togglePasswordVisibility() {
     setState(() {
