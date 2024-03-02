@@ -6,21 +6,72 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gym_app/assets/header/header.dart';
 import 'assets/bottomNavigator/bottomNavigator.dart';
+import 'package:gym_app/firestore_service.dart';
 import 'firebase_options.dart';
 
 import 'assets/header/header.dart';
-
-// ignore: use_key_in_widget_constructors
 class TrainingPage extends StatefulWidget {
-  const TrainingPage({super.key});
+  final String? exerciseName;
+  final String? weight;
+  final int? reps;
+  final String? muscleGroup;
+
+  const TrainingPage({
+    this.exerciseName,
+    this.weight,
+    this.reps,
+    this.muscleGroup,
+    });
 
   @override
-  // ignore: library_private_types_in_public_api
-  _TrainingPage createState() => _TrainingPage();
+  _TrainingPageState createState() => _TrainingPageState();
 }
 
-class _TrainingPage extends State<TrainingPage> {
+class _TrainingPageState extends State<TrainingPage> {
   String dropdownValue = 'Grupo muscular';
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final FirestoreService _firestoreService = FirestoreService();
+  late TextEditingController _exerciseNameController;
+  late TextEditingController _weightController;
+  late TextEditingController _repsController;
+
+  @override
+  void initState() {
+    super.initState();
+    _exerciseNameController = TextEditingController(text: widget.exerciseName ?? '');
+    _weightController = TextEditingController(text: widget.weight ?? '');
+    _repsController = TextEditingController(text: widget.reps?.toString() ?? '');
+    if (widget.muscleGroup != null) {
+      dropdownValue = widget.muscleGroup!;
+    }
+  }
+
+Future<void> _submitForm() async {
+if (_formKey.currentState!.validate()) {
+  final exerciseData = {
+    'name': _exerciseNameController.text,
+    'weight': _weightController.text,
+    'reps': int.parse(_repsController.text),
+    'muscularGroup': dropdownValue,
+  };
+
+  if (widget.exerciseName != null) {
+    // Editar exercício existente
+    // Preencha com a lógica para atualizar o exercício no Firestore
+    // Utilize o FirestoreService para atualizar o exercício existente
+  } else {
+    // create a new exercise
+    final userId = await _firestoreService.getUserIdFromFirestore();
+    if (userId != null) {
+      _firestoreService.addExercise(userId, exerciseData);
+      Navigator.pop(context);
+    } else {
+      print('User ID not available');
+    }
+  }
+}
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +83,12 @@ class _TrainingPage extends State<TrainingPage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
             child: Column(children: [
-          const Row(
+          Row(
             children: [
-              Text(
+              const Text(
                 "Meus treinos",
                 style: TextStyle(
                   fontSize: 12,
@@ -43,8 +96,8 @@ class _TrainingPage extends State<TrainingPage> {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(width: 10),
-              Text(
+              const SizedBox(width: 10),
+              const Text(
                 ">",
                 style: TextStyle(
                   fontSize: 12,
@@ -52,15 +105,14 @@ class _TrainingPage extends State<TrainingPage> {
                   color: Colors.black,
                 ),
               ),
-              SizedBox(width: 10),
-              Text(
-                "Supino",
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
-              ),
+              const SizedBox(width: 10),
+              // TextField(
+              //   controller: _exerciseNameController,
+              //   style: const TextStyle(
+              //     fontSize: 12,
+              //     fontWeight: FontWeight.bold,
+              //   ),
+              // ),
             ],
           ),
           const SizedBox(height: 20),
@@ -77,12 +129,13 @@ class _TrainingPage extends State<TrainingPage> {
               ],
             ),
             child: TextField(
-              controller: TextEditingController(text: 'Supino'),
+              controller: _exerciseNameController,
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
               decoration: InputDecoration(
+                labelText: 'Exercício',
                 fillColor: Colors.white,
                 filled: true,
                 border: OutlineInputBorder(
@@ -116,12 +169,13 @@ class _TrainingPage extends State<TrainingPage> {
               ],
             ),
             child: TextField(
-              controller: TextEditingController(text: 'Carga'),
+              controller: _weightController,
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
               decoration: InputDecoration(
+                labelText: 'Carga (kg)',
                 fillColor: Colors.white,
                 filled: true,
                 border: OutlineInputBorder(
@@ -155,12 +209,13 @@ class _TrainingPage extends State<TrainingPage> {
               ],
             ),
             child: TextField(
-              controller: TextEditingController(text: 'Reps'),
+              controller: _repsController,
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
               ),
               decoration: InputDecoration(
+                labelText: 'Número de Repetições',
                 fillColor: Colors.white,
                 filled: true,
                 border: OutlineInputBorder(
@@ -219,7 +274,16 @@ class _TrainingPage extends State<TrainingPage> {
                   dropdownValue = newValue!;
                 });
               },
-              items: <String>['Grupo muscular', 'Peito', 'Costas', 'Bíceps']
+              items: <String>[
+                'Grupo muscular', 
+                'Peito', 
+                'Costas', 
+                'Bíceps', 
+                'Tríceps', 
+                'Pernas', 
+                'Ombros', 
+                'Abdômen'
+                ]
                   .map<DropdownMenuItem<String>>((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
@@ -244,8 +308,7 @@ class _TrainingPage extends State<TrainingPage> {
 
             child: TextButton(
               onPressed: () {
-                // ignore: avoid_print
-                print('Submit');
+                _submitForm();
               },
               child: const Text(
                 'Salvar',
@@ -388,6 +451,7 @@ class _TrainingPage extends State<TrainingPage> {
             )
           ]),
         ])),
+        )
       ),
       bottomNavigationBar: const BottomNavigator(),
     );

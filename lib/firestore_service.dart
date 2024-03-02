@@ -12,6 +12,14 @@ class FirestoreService {
     }
   }
 
+  Future<void> updateExercise(String userId, String exerciseId, Map<String, dynamic> exerciseData) async {
+    try {
+      await _db.collection('users').doc(userId).collection('exercise').doc(exerciseId).update(exerciseData);
+    } catch (e) {
+      print('Error updating exercise: $e');
+    }
+  }
+
   Stream<QuerySnapshot> getExercises(String userId) {
     return _db.collection('users').doc(userId).collection('exercise').snapshots();
   }
