@@ -156,15 +156,25 @@ class _HomePage extends State<HomePage> {
                                 ),
                               ],
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  } else {
-                    return const CircularProgressIndicator();
-                  }
-                },
-              ),
+                          ],
+                        )
+                      );
+                    },
+                  );
+                } else {
+                  return const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Color.fromARGB(255, 57, 211, 54),
+                        ),
+                      ),
+                    ],
+                  );
+                }
+              },
+            ),
             ),
           ],
         ),
