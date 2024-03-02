@@ -92,6 +92,7 @@ class _HomePage extends State<HomePage> {
                 )
               ],
             ),
+            const SizedBox(height: 20),
             Expanded(
               child: StreamBuilder(
                 stream: userId != null
@@ -156,25 +157,24 @@ class _HomePage extends State<HomePage> {
                                 ),
                               ],
                             ),
-                          ],
-                        )
-                      );
-                    },
-                  );
-                } else {
-                  return const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Color.fromARGB(255, 57, 211, 54),
+                          ),
+                        );
+                      }
+                    );
+                  } else {
+                    return const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Color.fromARGB(255, 57, 211, 54),
+                          ),
                         ),
-                      ),
-                    ],
-                  );
-                }
-              },
-            ),
+                      ],
+                    );
+                  }
+                },
+              ),
             ),
           ],
         ),
