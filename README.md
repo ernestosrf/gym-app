@@ -1,10 +1,21 @@
 # gym_app
 
-A new Flutter project.
+A Gym App flutter project.
+
+## Members:
+
+- Ernesto Reis
+- Lucas Almeida de Lima
+- Pedro Afonso Braga
+- Vinícius França
+
+## Overview
+
+This Flutter project aims to develop a gym app where users can register, log in, request a password recovery email, add a workout routine, edit a workout routine. They are key features essential for a gym companion application.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Get started for a Flutter application.
 
 A few resources to get you started if this is your first Flutter project:
 
