@@ -154,7 +154,9 @@ class _HomePage extends State<HomePage> {
                                   ),
                                   IconButton(
                                     icon: Image.asset(
-                                        './assets/icons/delete_icon.png'),
+                                        './assets/icons/delete_icon.png',
+                                        width: 25,
+                                        ),
                                     onPressed: () {
                                       deleteExercise(
                                           snapshot.data!.docs[index].id);
