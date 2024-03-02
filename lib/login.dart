@@ -277,6 +277,7 @@ class _LoginPageState extends State<LoginPage> {
                                     borderRadius: BorderRadius.circular(10.0),
                                   ),
                                 ),
+                                onSubmitted: (_) => _loginUser(context),
                               ),
                               InkWell(
                                 onTap: () {
