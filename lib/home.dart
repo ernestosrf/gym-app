@@ -108,7 +108,18 @@ class _HomePage extends State<HomePage> {
                             IconButton(
                               icon: const Icon(Icons.edit),
                               onPressed: () {
-                                // TO-DO: add logic to edit exercise
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TrainingPage(
+                                      exerciseId: snapshot.data!.docs[index].id,
+                                      exerciseName: exercise['name'],
+                                      weight: exercise['weight'],
+                                      reps: exercise['reps'],
+                                      muscleGroup: exercise['muscleGroup'],
+                                    ),
+                                  ),
+                                );
                               },
                             ),
                             IconButton(

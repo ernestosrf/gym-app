@@ -11,12 +11,14 @@ import 'firebase_options.dart';
 
 import 'assets/header/header.dart';
 class TrainingPage extends StatefulWidget {
+  final String? exerciseId;
   final String? exerciseName;
   final String? weight;
   final int? reps;
   final String? muscleGroup;
 
   const TrainingPage({
+    this.exerciseId,
     this.exerciseName,
     this.weight,
     this.reps,
@@ -52,13 +54,18 @@ if (_formKey.currentState!.validate()) {
     'name': _exerciseNameController.text,
     'weight': _weightController.text,
     'reps': int.parse(_repsController.text),
-    'muscularGroup': dropdownValue,
+    'muscleGroup': dropdownValue,
   };
 
   if (widget.exerciseName != null) {
-    // Editar exercício existente
-    // Preencha com a lógica para atualizar o exercício no Firestore
-    // Utilize o FirestoreService para atualizar o exercício existente
+    // edit existing exercise
+    final userId = await _firestoreService.getUserIdFromFirestore();
+    if (userId != null) {
+      _firestoreService.updateExercise(userId, widget.exerciseId!, exerciseData);
+      Navigator.pop(context);
+    } else {
+      print('User ID not available');
+    }
   } else {
     // create a new exercise
     final userId = await _firestoreService.getUserIdFromFirestore();
@@ -106,13 +113,16 @@ if (_formKey.currentState!.validate()) {
                 ),
               ),
               const SizedBox(width: 10),
-              // TextField(
-              //   controller: _exerciseNameController,
-              //   style: const TextStyle(
-              //     fontSize: 12,
-              //     fontWeight: FontWeight.bold,
-              //   ),
-              // ),
+              Text(
+                _exerciseNameController.text.isEmpty 
+                ? 'Novo exercício' 
+                : _exerciseNameController.text,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+              ),
+              )
             ],
           ),
           const SizedBox(height: 20),
