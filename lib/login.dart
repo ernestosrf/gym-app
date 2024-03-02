@@ -22,12 +22,12 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool _obscureText = true;
-  String passwordHintText = '**********';
+  String passwordHintText = '';
 
   void _togglePasswordVisibility() {
     setState(() {
       _obscureText = !_obscureText;
-      passwordHintText = _obscureText ? '**********' : 'minhasenha';
+      passwordHintText = _obscureText ? '' : 'minhasenha';
     });
   }
 
@@ -37,13 +37,12 @@ class _LoginPageState extends State<LoginPage> {
         email: emailController.text,
         password: passwordController.text,
       );
+      print("Usuário conectado!");
       Navigator.push(
-        // ignore: use_build_context_synchronously
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
       );
     } on FirebaseAuthException catch (e) {
-      // TO-DO: show error message to user
       print(e.code);
       showDialog(
         context: context,
@@ -270,8 +269,7 @@ class _LoginPageState extends State<LoginPage> {
                                       _obscureText
                                           ? Icons.visibility_off
                                           : Icons.visibility,
-                                      color: const Color.fromARGB(
-                                          255, 57, 211, 54),
+                                      color: const Color.fromARGB(255, 57, 211, 54),
                                     ),
                                     onPressed: _togglePasswordVisibility,
                                   ),
