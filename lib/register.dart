@@ -118,13 +118,12 @@ class _RegisterPage extends State<RegisterPage> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Positioned.fill(
-            child: Image.asset(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              '../assets/imagens/gym_edit.jpg',
-              fit: BoxFit.cover,
-            ),
+          Image.asset(
+            '../assets/imagens/gym_edit.jpg',
+            fit: BoxFit.cover,
+            height: double.infinity,
+            width: double.infinity,
+            alignment: Alignment.center,
           ),
           SingleChildScrollView(
             child: Container(
