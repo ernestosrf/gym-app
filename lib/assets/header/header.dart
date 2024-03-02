@@ -1,9 +1,10 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously
 import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:gym_app/login.dart'; // Importe o arquivo login.dart
 
 // ignore: use_key_in_widget_constructors
 class Header extends StatefulWidget {
@@ -21,7 +22,8 @@ class _Header extends State<Header> {
   @override
   void initState() {
     super.initState();
-    authStateSubscription = FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    authStateSubscription =
+        FirebaseAuth.instance.authStateChanges().listen((User? user) {
       fetchUserName();
     });
     fetchUserName();
@@ -37,11 +39,17 @@ class _Header extends State<Header> {
     User? user = FirebaseAuth.instance.currentUser;
     if (user != null) {
       try {
-        QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').where('email', isEqualTo: user.email).get();
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+            .collection('users')
+            .where('email', isEqualTo: user.email)
+            .get();
         if (querySnapshot.docs.isNotEmpty) {
-          Map<String, dynamic>? data = querySnapshot.docs.first.data() as Map<String, dynamic>?;
+          Map<String, dynamic>? data =
+              querySnapshot.docs.first.data() as Map<String, dynamic>?;
           setState(() {
-            userName = data != null && data.containsKey('name') ? data['name'] + "!" : 'Username!';
+            userName = data != null && data.containsKey('name')
+                ? data['name'] + "!"
+                : 'Username!';
           });
         }
       } catch (e) {
@@ -96,8 +104,11 @@ class _Header extends State<Header> {
               icon: const Icon(Icons.logout),
               onPressed: () async {
                 await FirebaseAuth.instance.signOut();
-                print(FirebaseAuth.instance
-                    .currentUser); // Deve imprimir null se o usuário foi desconectado com sucesso
+                print("Usuário desconectado!");
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginPage()),
+                );
               },
             ),
           ),
