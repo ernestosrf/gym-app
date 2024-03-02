@@ -99,19 +99,28 @@ class _Header extends State<Header> {
             ),
           ),
           Align(
-            alignment: Alignment.centerRight,
-            child: IconButton(
-              icon: const Icon(Icons.logout),
-              onPressed: () async {
-                await FirebaseAuth.instance.signOut();
-                print("Usuário desconectado!");
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
-              },
-            ),
-          ),
+  alignment: Alignment.centerRight,
+  child: Container(
+    decoration: BoxDecoration(
+      shape: BoxShape.circle,
+      border: Border.all(
+        color: Colors.black,
+        width: 2,
+      ),
+    ),
+    child: IconButton(
+      icon: const Icon(Icons.logout),
+      onPressed: () async {
+        await FirebaseAuth.instance.signOut();
+        print("Usuário desconectado!");
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      },
+    ),
+  ),
+),
         ],
       ),
       bottom: PreferredSize(
