@@ -62,6 +62,68 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+  void _forgotPassword() async {
+    if (emailController.text.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Erro ao solicitar recuperação de senha'),
+          content: const Text(
+              "Digite seu email para solicitar recuperação de senha."),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    try {
+      await FirebaseAuth.instance
+          .sendPasswordResetEmail(email: emailController.text);
+      print("Email de recuperação de senha enviado!");
+
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Recuperação de senha'),
+          content: const Text("Email de recuperação de senha enviado!"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e.code);
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Recuperação de senha'),
+          content:
+              const Text("Erro ao enviar o email de recuperação de senha."),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
   String _getErrorMessage(String errorCode) {
     switch (errorCode) {
       case 'invalid-email':
@@ -280,10 +342,7 @@ class _LoginPageState extends State<LoginPage> {
                                 onSubmitted: (_) => _loginUser(context),
                               ),
                               InkWell(
-                                onTap: () {
-                                  //    print(
-                                  //        'Usuário apertou "Esqueci minha senha"');
-                                },
+                                onTap: _forgotPassword,
                                 child: const Text(
                                   'Esqueci minha senha',
                                   style: TextStyle(
