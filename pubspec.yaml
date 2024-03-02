@@ -68,6 +68,7 @@ flutter:
   assets:
     - ./assets/images/gym_edit.jpg
     - ./assets/icons/delete_icon.png
+    - ./assets/icons/pencil_square_icon.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

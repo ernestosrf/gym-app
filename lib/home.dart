@@ -131,7 +131,10 @@ class _HomePage extends State<HomePage> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   IconButton(
-                                    icon: const Icon(Icons.edit),
+                                    icon: Image.asset(
+                                        './assets/icons/pencil_square_icon.png',
+                                        width: 20,
+                                        ),
                                     onPressed: () {
                                       Navigator.push(
                                         context,
