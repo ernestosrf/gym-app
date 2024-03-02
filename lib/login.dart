@@ -1,4 +1,6 @@
 // import packages
+// ignore_for_file: avoid_print, use_build_context_synchronously, duplicate_ignore
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -40,24 +42,30 @@ class _LoginPageState extends State<LoginPage> {
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
       );
-    } catch (e) {
-      // ignore: use_build_context_synchronously
-      emailController.text;
-      passwordController.text;
-      Navigator.push(
-        // ignore: use_build_context_synchronously
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
-      // ignore: dead_code_catch_following_catch
-    } catch (e) {
-      // ignore: use_build_context_synchronously
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Erro ao fazer login.'),
-        ),
-      );
+    } on FirebaseAuthException catch (e) {
+      // TO-DO: show error message to user
+      print(e.code);
+      if (e.code == 'invalid-email') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('E-mail não cadastrado'),
+          ),
+        );
+      } else if (e.code == 'invalid-credential') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Senha incorreta'),
+          ),
+        );
+      }
     }
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -148,7 +156,8 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => RegisterPage()),
+                                      builder: (context) =>
+                                          const RegisterPage()),
                                 );
                               },
                               style: ButtonStyle(
@@ -202,12 +211,15 @@ class _LoginPageState extends State<LoginPage> {
                                 controller: emailController,
                                 style: const TextStyle(
                                     color: Color.fromARGB(255, 57, 211, 54)),
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   hintText: 'meuemail@gymapp.com',
-                                  hintStyle: TextStyle(
+                                  hintStyle: const TextStyle(
                                       color: Color.fromARGB(255, 57, 211, 54)),
                                   fillColor: Colors.white,
                                   filled: true,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
                                 ),
                               ),
                             ],
@@ -241,16 +253,20 @@ class _LoginPageState extends State<LoginPage> {
                                       _obscureText
                                           ? Icons.visibility_off
                                           : Icons.visibility,
-                                      color: const Color.fromARGB(255, 57, 211, 54),
+                                      color: const Color.fromARGB(
+                                          255, 57, 211, 54),
                                     ),
                                     onPressed: _togglePasswordVisibility,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
                                   ),
                                 ),
                               ),
                               InkWell(
                                 onTap: () {
-                              //    print(
-                              //        'Usuário apertou "Esqueci minha senha"');
+                                  //    print(
+                                  //        'Usuário apertou "Esqueci minha senha"');
                                 },
                                 child: const Text(
                                   'Esqueci minha senha',
