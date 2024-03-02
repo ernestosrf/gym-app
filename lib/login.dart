@@ -156,7 +156,8 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => const RegisterPage()),
+                                      builder: (context) =>
+                                          const RegisterPage()),
                                 );
                               },
                               style: ButtonStyle(
@@ -210,12 +211,15 @@ class _LoginPageState extends State<LoginPage> {
                                 controller: emailController,
                                 style: const TextStyle(
                                     color: Color.fromARGB(255, 57, 211, 54)),
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   hintText: 'meuemail@gymapp.com',
-                                  hintStyle: TextStyle(
+                                  hintStyle: const TextStyle(
                                       color: Color.fromARGB(255, 57, 211, 54)),
                                   fillColor: Colors.white,
                                   filled: true,
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
                                 ),
                               ),
                             ],
@@ -253,6 +257,9 @@ class _LoginPageState extends State<LoginPage> {
                                           255, 57, 211, 54),
                                     ),
                                     onPressed: _togglePasswordVisibility,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
                                   ),
                                 ),
                               ),

@@ -14,7 +14,7 @@ class Header extends StatefulWidget {
 }
 
 class _Header extends State<Header> {
-  String userName = ' Offline! Faça login novamente!';
+  String userName = ' username!';
 
   @override
   void initState() {
