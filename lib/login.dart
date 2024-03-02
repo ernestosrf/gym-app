@@ -45,19 +45,36 @@ class _LoginPageState extends State<LoginPage> {
     } on FirebaseAuthException catch (e) {
       // TO-DO: show error message to user
       print(e.code);
-      if (e.code == 'invalid-email') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('E-mail não cadastrado'),
-          ),
-        );
-      } else if (e.code == 'invalid-credential') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Senha incorreta'),
-          ),
-        );
-      }
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Erro de autenticação'),
+          content: Text(_getErrorMessage(e.code)),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+  String _getErrorMessage(String errorCode) {
+    switch (errorCode) {
+      case 'invalid-email':
+        return 'E-mail não cadastrado/inválido';
+      case 'wrong-password':
+        return 'Senha incorreta';
+      case 'invalid-credential':
+        return 'Credenciais inválidas (e-mail ou senha errados)';
+      case 'missing-password':
+        return 'Senha não informada';
+      default:
+        return 'Ocorreu um erro durante a autenticação. Por favor, tente novamente mais tarde.';
     }
   }
 
