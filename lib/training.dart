@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:gym_app/assets/header/header.dart';
+import 'assets/bottomNavigator/bottomNavigator.dart';
 import 'firebase_options.dart';
 
 import 'assets/header/header.dart';
@@ -388,6 +389,7 @@ class _TrainingPage extends State<TrainingPage> {
           ]),
         ])),
       ),
+      bottomNavigationBar: const BottomNavigator(),
     );
   }
 }
