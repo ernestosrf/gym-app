@@ -41,13 +41,13 @@ class _HomePage extends State<HomePage> {
     });
   }
 
- Future<void> deleteExercise(String exerciseId) async {
+  Future<void> deleteExercise(String exerciseId) async {
     try {
       await _firestoreService.deleteExercise(userId!, exerciseId);
     } catch (e) {
       print('Error deleting exercise: $e');
     }
-  }  
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -92,52 +92,79 @@ class _HomePage extends State<HomePage> {
                 )
               ],
             ),
-            Expanded(child: StreamBuilder(
-              stream: userId != null ? _firestoreService.getExercises(userId!) : null,
-              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                if (snapshot.hasData) {
-                  return ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (context, index) {
-                      var exercise = snapshot.data!.docs[index];
-                      return ListTile(
-                        title: Text(exercise['name']),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.edit),
-                              onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => TrainingPage(
-                                      exerciseId: snapshot.data!.docs[index].id,
-                                      exerciseName: exercise['name'],
-                                      weight: exercise['weight'],
-                                      reps: exercise['reps'],
-                                      muscleGroup: exercise['muscleGroup'],
-                                    ),
-                                  ),
-                                );
-                              },
+            Expanded(
+              child: StreamBuilder(
+                stream: userId != null
+                    ? _firestoreService.getExercises(userId!)
+                    : null,
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        var exercise = snapshot.data!.docs[index];
+                        return Container(
+                          margin: const EdgeInsets.symmetric(vertical: 8),
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.grey.withOpacity(0.5),
+                                spreadRadius: 2,
+                                blurRadius: 4,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: ListTile(
+                            title: Text(
+                              exercise['name'],
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                            IconButton(
-                              icon: const Icon(Icons.delete),
-                              onPressed: () {
-                                deleteExercise(snapshot.data!.docs[index].id);
-                              },
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.edit),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => TrainingPage(
+                                          exerciseId:
+                                              snapshot.data!.docs[index].id,
+                                          exerciseName: exercise['name'],
+                                          weight: exercise['weight'],
+                                          reps: exercise['reps'],
+                                          muscleGroup: exercise['muscleGroup'],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                                IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () {
+                                    deleteExercise(
+                                        snapshot.data!.docs[index].id);
+                                  },
+                                ),
+                              ],
                             ),
-                          ],
-                        )
-                      );
-                    },
-                  );
-                } else {
-                  return const CircularProgressIndicator();
-                }
-              },
-            ),
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return const CircularProgressIndicator();
+                  }
+                },
+              ),
             ),
           ],
         ),
