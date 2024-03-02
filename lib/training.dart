@@ -1,4 +1,4 @@
-// ignore_for_file: unused_import, duplicate_import, unnecessary_import
+// ignore_for_file: unused_import, duplicate_import, unnecessary_import, use_build_context_synchronously
 
 import 'dart:ui';
 
