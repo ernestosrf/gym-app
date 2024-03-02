@@ -76,20 +76,19 @@ class _HomePage extends State<HomePage> {
                     color: Colors.black,
                   ),
                 ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const TrainingPage()),
-                    );
-                  },
-                  child: const Icon(
-                    Icons.add_box_outlined,
-                    size: 30,
-                    color: Colors.black,
-                  ),
-                )
+                InkWell(
+  onTap: () {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const TrainingPage()),
+    );
+  },
+  child: const Icon(
+    Icons.add_box_outlined,
+    size: 30,
+    color: Colors.black,
+  ),
+),
               ],
             ),
             const SizedBox(height: 20),
