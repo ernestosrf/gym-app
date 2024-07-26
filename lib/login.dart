@@ -2,11 +2,11 @@
 // ignore_for_file: avoid_print, use_build_context_synchronously, duplicate_ignore
 
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 
 // import pages
 import 'register.dart';
-import 'home.dart';
+import 'home1.dart';
 
 // ignore: use_key_in_widget_constructors
 
@@ -32,34 +32,34 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void _loginUser(BuildContext context) async {
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
-      );
-      print("Usuário conectado!");
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
-      );
-    } on FirebaseAuthException catch (e) {
-      print(e.code);
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Erro de autenticação'),
-          content: Text(_getErrorMessage(e.code)),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );
-    }
+    // try {
+    //   await FirebaseAuth.instance.signInWithEmailAndPassword(
+    //     email: emailController.text,
+    //     password: passwordController.text,
+    //   );
+    //   print("Usuário conectado!");
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => const HomePage()),
+    //   );
+    // } on FirebaseAuthException catch (e) {
+    //   print(e.code);
+    //   showDialog(
+    //     context: context,
+    //     builder: (context) => AlertDialog(
+    //       title: const Text('Erro de autenticação'),
+    //       content: Text(_getErrorMessage(e.code)),
+    //       actions: <Widget>[
+    //         TextButton(
+    //           onPressed: () {
+    //             Navigator.pop(context);
+    //           },
+    //           child: const Text('OK'),
+    //         ),
+    //       ],
+    //     ),
+    //   );
+    // }
   }
 
   void _forgotPassword() async {
@@ -83,45 +83,45 @@ class _LoginPageState extends State<LoginPage> {
       return;
     }
 
-    try {
-      await FirebaseAuth.instance
-          .sendPasswordResetEmail(email: emailController.text);
-      print("Email de recuperação de senha enviado!");
+    // try {
+    //   await FirebaseAuth.instance
+    //       .sendPasswordResetEmail(email: emailController.text);
+    //   print("Email de recuperação de senha enviado!");
 
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Recuperação de senha'),
-          content: const Text("Email de recuperação de senha enviado!"),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );
-    } on FirebaseAuthException catch (e) {
-      print(e.code);
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Recuperação de senha'),
-          content:
-              const Text("Erro ao enviar o email de recuperação de senha."),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        ),
-      );
-    }
+    //   showDialog(
+    //     context: context,
+    //     builder: (context) => AlertDialog(
+    //       title: const Text('Recuperação de senha'),
+    //       content: const Text("Email de recuperação de senha enviado!"),
+    //       actions: <Widget>[
+    //         TextButton(
+    //           onPressed: () {
+    //             Navigator.pop(context);
+    //           },
+    //           child: const Text('OK'),
+    //         ),
+    //       ],
+    //     ),
+    //   );
+    // } on FirebaseAuthException catch (e) {
+    //   print(e.code);
+    //   showDialog(
+    //     context: context,
+    //     builder: (context) => AlertDialog(
+    //       title: const Text('Recuperação de senha'),
+    //       content:
+    //           const Text("Erro ao enviar o email de recuperação de senha."),
+    //       actions: <Widget>[
+    //         TextButton(
+    //           onPressed: () {
+    //             Navigator.pop(context);
+    //           },
+    //           child: const Text('OK'),
+    //         ),
+    //       ],
+    //     ),
+    //   );
+    // }
   }
 
   String _getErrorMessage(String errorCode) {

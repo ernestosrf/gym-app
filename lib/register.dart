@@ -1,9 +1,9 @@
 // import packages
 // ignore_for_file: unnecessary_import, use_build_context_synchronously
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 
 // import pages
@@ -56,61 +56,61 @@ class _RegisterPage extends State<RegisterPage> {
   }
 
   void _registerUser(BuildContext context) async {
-    try {
-      if (passwordMatch()) {
-        // create user
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-        );
+    // try {
+    //   if (passwordMatch()) {
+    //     // create user
+    //     await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    //       email: emailController.text,
+    //       password: passwordController.text,
+    //     );
 
-        // add user data
-        addUserData(nameController.text.trim(), emailController.text.trim());
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('As senhas não coincidem.'),
-          ),
-        );
-        return;
-      }
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Usuário cadastrado com sucesso!'),
-        ),
-      );
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('A senha é muito fraca.'),
-          ),
-        );
-      } else if (e.code == 'email-already-in-use') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('O e-mail já está em uso.'),
-          ),
-        );
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Erro ao cadastrar usuário.'),
-        ),
-      );
-    }
+    //     // add user data
+    //     addUserData(nameController.text.trim(), emailController.text.trim());
+    //   } else {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       const SnackBar(
+    //         content: Text('As senhas não coincidem.'),
+    //       ),
+    //     );
+    //     return;
+    //   }
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text('Usuário cadastrado com sucesso!'),
+    //     ),
+    //   );
+    //   Navigator.push(
+    //     context,
+    //     MaterialPageRoute(builder: (context) => const LoginPage()),
+    //   );
+    // } on FirebaseAuthException catch (e) {
+    //   if (e.code == 'weak-password') {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       const SnackBar(
+    //         content: Text('A senha é muito fraca.'),
+    //       ),
+    //     );
+    //   } else if (e.code == 'email-already-in-use') {
+    //     ScaffoldMessenger.of(context).showSnackBar(
+    //       const SnackBar(
+    //         content: Text('O e-mail já está em uso.'),
+    //       ),
+    //     );
+    //   }
+    // } catch (e) {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text('Erro ao cadastrar usuário.'),
+    //     ),
+    //   );
+    // }
   }
 
   Future addUserData(String name, String email) async {
-    await FirebaseFirestore.instance.collection('users').add({
-      'name': name,
-      'email': email,
-    });
+    // await FirebaseFirestore.instance.collection('users').add({
+    //   'name': name,
+    //   'email': email,
+    // });
   }
 
   @override

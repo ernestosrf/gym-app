@@ -4,7 +4,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 import 'package:gym_app/assets/header/header.dart';
 import 'assets/bottomNavigator/bottomNavigator.dart';
 import 'package:gym_app/firestore_service.dart';
@@ -60,26 +60,26 @@ if (_formKey.currentState!.validate()) {
 
   if (widget.exerciseName != null) {
     // edit existing exercise
-    final userId = await _firestoreService.getUserIdFromFirestore();
-    if (userId != null) {
-      _firestoreService.updateExercise(userId, widget.exerciseId!, exerciseData);
-      Navigator.pop(context);
-    } else {
-      if (kDebugMode) {
-        print('User ID not available');
-      }
-    }
+    // final userId = await _firestoreService.getUserIdFromFirestore();
+    // if (userId != null) {
+    //   _firestoreService.updateExercise(userId, widget.exerciseId!, exerciseData);
+    //   Navigator.pop(context);
+    // } else {
+    //   if (kDebugMode) {
+    //     print('User ID not available');
+    //   }
+    // }
   } else {
     // create a new exercise
-    final userId = await _firestoreService.getUserIdFromFirestore();
-    if (userId != null) {
-      _firestoreService.addExercise(userId, exerciseData);
-      Navigator.pop(context);
-    } else {
-      if (kDebugMode) {
-        print('User ID not available');
-      }
-    }
+    // final userId = await _firestoreService.getUserIdFromFirestore();
+    // if (userId != null) {
+    //   _firestoreService.addExercise(userId, exerciseData);
+    //   Navigator.pop(context);
+    // } else {
+    //   if (kDebugMode) {
+    //     print('User ID not available');
+    //   }
+    // }
   }
 }
 }

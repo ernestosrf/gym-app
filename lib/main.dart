@@ -1,20 +1,15 @@
-// import packages
-// ignore_for_file: unused_import, duplicate_import
-
+// Imports
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:gym_app/register.dart';
-import 'firebase_options.dart';
+import 'package:gym_app/theme/theme.dart';
+import 'pages/home/home.dart';
 
-// import pages
-import 'login.dart';
-import 'register.dart';
-import 'home.dart';
-import 'training.dart';
+// Components
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+// Images
+
+// Styles
+
+void main() {
   runApp(const MyApp());
 }
 
@@ -26,10 +21,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Gym App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const LoginPage(),
+      theme: AppTheme.themeData,
+      home: const HomePage(),
     );
   }
 }

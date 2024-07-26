@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import '../../home.dart';
+import '../../home1.dart';
 import '../../training.dart';
 
 // ignore: use_key_in_widget_constructors

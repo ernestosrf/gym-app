@@ -2,8 +2,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gym_app/login.dart'; // Importe o arquivo login.dart
 
 // ignore: use_key_in_widget_constructors
@@ -17,50 +17,50 @@ class Header extends StatefulWidget {
 
 class _Header extends State<Header> {
   String userName = ' Username!';
-  StreamSubscription<User?>? authStateSubscription;
+  // StreamSubscription<User?>? authStateSubscription;
 
   @override
-  void initState() {
-    super.initState();
-    authStateSubscription =
-        FirebaseAuth.instance.authStateChanges().listen((User? user) {
-      fetchUserName();
-    });
-    fetchUserName();
-  }
+  // void initState() {
+  //   super.initState();
+  //   authStateSubscription =
+  //       FirebaseAuth.instance.authStateChanges().listen((User? user) {
+  //     fetchUserName();
+  //   });
+  //   fetchUserName();
+  // }
 
   @override
   void dispose() {
-    authStateSubscription?.cancel();
+    // authStateSubscription?.cancel();
     super.dispose();
   }
 
-  fetchUserName() async {
-    User? user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      try {
-        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
-            .collection('users')
-            .where('email', isEqualTo: user.email)
-            .get();
-        if (querySnapshot.docs.isNotEmpty) {
-          Map<String, dynamic>? data =
-              querySnapshot.docs.first.data() as Map<String, dynamic>?;
-          setState(() {
-            userName = data != null && data.containsKey('name')
-                ? data['name'] + "!"
-                : 'Username!';
-          });
-        }
-      } catch (e) {
-        print('Error getting username: $e');
-      }
-    } else {
-      setState(() {
-        userName = 'Desconectado!';
-      });
-    }
-  }
+  // fetchUserName() async {
+  //   User? user = FirebaseAuth.instance.currentUser;
+  //   if (user != null) {
+  //     try {
+  //       QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+  //           .collection('users')
+  //           .where('email', isEqualTo: user.email)
+  //           .get();
+  //       if (querySnapshot.docs.isNotEmpty) {
+  //         Map<String, dynamic>? data =
+  //             querySnapshot.docs.first.data() as Map<String, dynamic>?;
+  //         setState(() {
+  //           userName = data != null && data.containsKey('name')
+  //               ? data['name'] + "!"
+  //               : 'Username!';
+  //         });
+  //       }
+  //     } catch (e) {
+  //       print('Error getting username: $e');
+  //     }
+  //   } else {
+  //     setState(() {
+  //       userName = 'Desconectado!';
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +113,7 @@ class _Header extends State<Header> {
       borderRadius: const BorderRadius.all(Radius.circular(8)),
       child: InkWell(
         onTap: () async {
-          await FirebaseAuth.instance.signOut();
+          // await FirebaseAuth.instance.signOut();
           print("Usuário desconectado!");
           Navigator.pushReplacement(
             context,
